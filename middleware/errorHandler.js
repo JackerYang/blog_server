@@ -2,7 +2,7 @@ module.exports = async (ctx, next) => {
     try {
         await next();
     } catch (err) {
-        console.log("捕获到错误");
-        return ctx.body = err.msg;
+        console.log(err);
+        ctx.err(400, "请求出错，请联系管理员！");
     }
 };

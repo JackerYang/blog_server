@@ -1,13 +1,13 @@
 {
-    "name": "admin",
+    "name": "blog_server",
     "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "description": "The server of the blog",
+    "main": "app.js",
     "scripts": {
         "start": "node app.js"
     },
     "keywords": [],
-    "author": "",
+    "author": "nickyang",
     "license": "ISC",
     "devDependencies": {
         "co-mysql": "^1.0.0",
