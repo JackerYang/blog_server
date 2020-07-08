@@ -1,10 +1,10 @@
-const router = require("koa-router")();
-const userRoutes = require("./user");
+const router = require("koa-router")()
+const categoryRoutes = require("./category")
 
 // 前缀
-router.prefix("/api");
+router.prefix("/api")
 
-// 用户路由
-router.use("/user", userRoutes);
+// 分类路由
+router.use("/category", categoryRoutes)
 
-module.exports = app => app.use(router.routes());
+module.exports = app => app.use(router.routes())

@@ -1,13 +1,14 @@
 module.exports = {
     // 服务端口
-    SERVER_PORT: 3000,
+    SERVER_PORT: 8000,
 
     // 数据库
     DATABASE: {
         host: "localhost",
         user: "root",
-        password: "@Root_12138",
-        database: "website_server"
+        password: "123456",
+        database: "blog",
+        timezone: "08:00"
     },
 
     // 用户密码前缀
@@ -15,4 +16,4 @@ module.exports = {
 
     // token加密
     TOKEN_SALT: "ysw_token_secret"
-};
+}
