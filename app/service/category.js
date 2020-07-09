@@ -5,7 +5,7 @@ module.exports = {
 
     getCategoryPage: async params => {
         let record = await category.getCategoryPage(params)
-        let total = await category.getCategoryCount()
+        let total = await category.getCategoryCount(params)
         return { record, total: total[0]["COUNT(*)"] }
     },
 

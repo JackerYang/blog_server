@@ -1,10 +1,13 @@
 const router = require("koa-router")()
 const categoryRoutes = require("./category")
+const friendRoutes = require("./friend")
 
 // 前缀
 router.prefix("/api")
 
-// 分类路由
+// 分类
 router.use("/category", categoryRoutes)
+// 友邻
+router.use("/friend", friendRoutes)
 
 module.exports = app => app.use(router.routes())

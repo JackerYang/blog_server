@@ -2,8 +2,11 @@ const { query } = require("../../database/db")
 
 module.exports = {
     // 获取总数
-    getCategoryCount: async () => {
+    getCategoryCount: async ({ name }) => {
         let sql = `SELECT COUNT(*) FROM article_category`
+        if (name) {
+            sql += ` WHERE name LIKE "%${name}%"`
+        }
         return await query(sql)
     },
 
@@ -11,19 +14,23 @@ module.exports = {
     getCategoryList: async () => {
         let sql = `
             SELECT 
-            id, name, remark, update_time, create_time 
+            id, name
             FROM article_category
         `
         return await query(sql)
     },
 
     // 获取分页
-    getCategoryPage: async ({ page, pageSize }) => {
+    getCategoryPage: async ({ page, pageSize, name }) => {
         let sql = `
             SELECT
             id, name, remark, update_time, create_time
-            FROM article_category LIMIT ${pageSize * (page - 1)},${pageSize}
+            FROM article_category 
         `
+        if (name) {
+            sql += ` WHERE name LIKE "%${name}%"`
+        }
+        sql += ` LIMIT ${pageSize * (page - 1)},${pageSize}`
         return await query(sql)
     },
 
