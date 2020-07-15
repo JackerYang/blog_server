@@ -12,7 +12,7 @@ module.exports = {
         let total = await friend.getFriendCount(params)
         return {
             record: record.map(r => addLocalIP(r, "avatar", localIP)),
-            total: total[0]["COUNT(*)"]
+            total: total[0]["count"]
         }
     },
 

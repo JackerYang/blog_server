@@ -3,7 +3,7 @@ const { query } = require("../../database/db")
 module.exports = {
     // 获取总数
     getFriendCount: async ({ name }) => {
-        let sql = `SELECT COUNT(*) FROM friend_link`
+        let sql = `SELECT COUNT(*) count FROM friend`
         if (name) {
             sql += ` WHERE name LIKE "%${name}%"`
         }
@@ -15,7 +15,7 @@ module.exports = {
         let sql = `
             SELECT 
             id, name, introduction, avatar, url
-            FROM friend_link
+            FROM friend
         `
         return await query(sql)
     },
@@ -25,7 +25,7 @@ module.exports = {
         let sql = `
             SELECT
             id, name, introduction, avatar, url, update_time, create_time 
-            FROM friend_link 
+            FROM friend 
         `
         if (name) {
             sql += ` WHERE name LIKE "%${name}%"`
@@ -39,7 +39,7 @@ module.exports = {
         let sql = `
             SELECT
             id, name, introduction, avatar, url
-            FROM friend_link WHERE id = ${id}
+            FROM friend WHERE id = ${id}
         `
         return await query(sql)
     },
@@ -48,7 +48,7 @@ module.exports = {
     addFriend: async ({ name, introduction, avatar, url }) => {
         let sql = `
             INSERT INTO
-            friend_link(name, introduction, avatar, url)
+            friend(name, introduction, avatar, url)
             VALUES("${name}", "${introduction}", "${avatar}", "${url}")
         `
         return await query(sql)
@@ -57,7 +57,7 @@ module.exports = {
     // 修改一个友邻
     editFriend: async ({ id, name, introduction, avatar, url }) => {
         let sql = `
-            UPDATE friend_link SET 
+            UPDATE friend SET 
             name = "${name}", introduction = "${introduction}", avatar = "${avatar}", url = "${url}"
             WHERE id = ${id}
         `
@@ -67,7 +67,7 @@ module.exports = {
     // 批量删除友邻
     delFriend: async ids => {
         let sql = `
-            DELETE FROM friend_link
+            DELETE FROM friend
             WHERE id IN (${ids})
         `
         return await query(sql)
