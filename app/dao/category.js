@@ -82,5 +82,20 @@ module.exports = {
             WHERE article_id = ${article_id}
         `
         return await query(sql)
+    },
+    // 根据文章id添加分类数据
+    addCategoryByArticleId: async (article_id, { categories }) => {
+        let sql = `
+            INSERT INTO
+            article_category(article_id, category_id)
+            VALUES
+        `
+        categories.forEach((category_id, index) => {
+            sql += `("${article_id}", "${category_id}")`
+            if (categories.length - 1 !== index) {
+                sql += `,`
+            }
+        })
+        return await query(sql)
     }
 }

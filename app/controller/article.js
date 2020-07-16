@@ -15,13 +15,13 @@ module.exports = {
         let res = await article.getArticle(req.id)
         ctx.send(res)
     },
-    //
-    // addArticle: async ctx => {
-    //     let req = ctx.request.body
-    //     if (paramsHasEmpty(ctx, req, ["name"])) return
-    //     await article.addArticle(req)
-    //     ctx.send(null)
-    // },
+
+    addArticle: async ctx => {
+        let req = ctx.request.body
+        if (paramsHasEmpty(ctx, req, ["title", "thumbnail", "desc", "content", "categories"])) return
+        await article.addArticle(req, ctx.origin)
+        ctx.send(null)
+    },
     //
     // editArticle: async ctx => {
     //     let req = ctx.request.body

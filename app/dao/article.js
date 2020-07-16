@@ -29,22 +29,23 @@ module.exports = {
     getArticle: async id => {
         let sql = `
             SELECT
-            id, thumbnail, title, "desc", content
+            id, thumbnail, title, \`desc\`, content
             FROM article
             WHERE id = ${id}
         `
         return await query(sql)
     },
-    //
-    // // 添加一篇文章
-    // addArticle: async ({ title, remark }) => {
-    //     let sql = `
-    //         INSERT INTO
-    //         article(title, remark)
-    //         VALUES("${title}", "${remark}")
-    //     `
-    //     return await query(sql)
-    // },
+
+    // 添加一篇文章
+    addArticle: async ({ thumbnail, title, desc, content }) => {
+        let sql = `
+            INSERT INTO
+            article(thumbnail, title, \`desc\`, content, user_id)
+            VALUES("${thumbnail}", "${title}", "${desc}", "${content}", 1)
+        `
+        let data = await query(sql)
+        return data.insertId
+    },
     //
     // // 修改一篇文章
     // editArticle: async ({ id, title, remark }) => {

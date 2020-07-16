@@ -3,5 +3,6 @@ const article = require("../app/controller/article")
 
 articleRouter.get("/page", article.getArticlePage)
 articleRouter.get("/", article.getArticle)
+articleRouter.post("/", article.addArticle)
 
 module.exports = articleRouter.routes()

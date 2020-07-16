@@ -1,5 +1,6 @@
 const article = require("../dao/article")
 const category = require("../dao/category")
+const { delLocalIP } = require("../../libs/utils")
 
 module.exports = {
     getArticlePage: async params => {
@@ -13,8 +14,11 @@ module.exports = {
         let categories = await category.getCategoryByArticleId(id)
         return { ...record[0], categories: categories.map(c => c.category_id) }
     },
-    //
-    // addArticle: async model => await article.addArticle(model),
+
+    addArticle: async (model, localIP) => {
+        let article_id = await article.addArticle(delLocalIP(model, "thumbnail", localIP))
+        await category.addCategoryByArticleId(article_id, model)
+    },
     //
     // editArticle: async model => await article.editArticle(model),
     //
