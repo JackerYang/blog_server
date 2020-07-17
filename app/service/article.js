@@ -1,6 +1,5 @@
 const article = require("../dao/article")
-const category = require("../dao/category")
-const { delLocalIP } = require("../../libs/utils")
+const { addLocalIP, delLocalIP } = require("../../libs/utils")
 
 module.exports = {
     getArticlePage: async params => {
@@ -9,18 +8,25 @@ module.exports = {
         return { record, total: total[0]["count"] }
     },
 
-    getArticle: async id => {
+    getArticle: async (id, localIP) => {
         let record = await article.getArticle(id)
-        let categories = await category.getCategoryByArticleId(id)
-        return { ...record[0], categories: categories.map(c => c.category_id) }
+        let categories = await article.getCategoryByArticleId(id)
+        return { ...addLocalIP(record[0], "thumbnail", localIP), categories: categories.map(c => c.category_id) }
     },
 
     addArticle: async (model, localIP) => {
         let article_id = await article.addArticle(delLocalIP(model, "thumbnail", localIP))
-        await category.addCategoryByArticleId(article_id, model)
+        await article.addCategoryByArticleId(article_id, model)
     },
-    //
-    // editArticle: async model => await article.editArticle(model),
-    //
-    // delArticle: async ids => await article.delArticle(ids)
+
+    editArticle: async model => {
+        await article.editArticle(model)
+        await article.delArticleCategory([model.id])
+        await article.addCategoryByArticleId(model.id, model)
+    },
+
+    delArticle: async ids => {
+        await article.delArticle(ids)
+        await article.delArticleCategory(ids)
+    }
 }

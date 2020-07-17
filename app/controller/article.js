@@ -12,28 +12,28 @@ module.exports = {
     getArticle: async ctx => {
         let req = ctx.request.query
         if (paramsHasEmpty(ctx, req, ["id"])) return
-        let res = await article.getArticle(req.id)
+        let res = await article.getArticle(req.id, ctx.origin)
         ctx.send(res)
     },
 
     addArticle: async ctx => {
         let req = ctx.request.body
-        if (paramsHasEmpty(ctx, req, ["title", "thumbnail", "desc", "content", "categories"])) return
+        if (paramsHasEmpty(ctx, req, ["title", "desc", "content", "categories"])) return
         await article.addArticle(req, ctx.origin)
         ctx.send(null)
     },
-    //
-    // editArticle: async ctx => {
-    //     let req = ctx.request.body
-    //     if (paramsHasEmpty(ctx, req, ["id", "name"])) return
-    //     await article.editArticle(req)
-    //     ctx.send(null)
-    // },
-    //
-    // delArticle: async ctx => {
-    //     let req = ctx.request.query
-    //     if (paramsHasEmpty(ctx, req, ["ids"])) return
-    //     await article.delArticle(req.ids.split(","))
-    //     ctx.send(null)
-    // }
+
+    editArticle: async ctx => {
+        let req = ctx.request.body
+        if (paramsHasEmpty(ctx, req, ["id", "title", "desc", "content", "categories"])) return
+        await article.editArticle(req)
+        ctx.send(null)
+    },
+
+    delArticle: async ctx => {
+        let req = ctx.request.query
+        if (paramsHasEmpty(ctx, req, ["ids"])) return
+        await article.delArticle(req.ids.split(","))
+        ctx.send(null)
+    }
 }

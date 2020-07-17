@@ -18,5 +18,8 @@ module.exports = {
 
     editCategory: async model => await category.editCategory(model),
 
-    delCategory: async ids => await category.delCategory(ids)
+    delCategory: async ids => {
+        await category.delCategory(ids)
+        await category.delArticleCategory(ids)
+    }
 }

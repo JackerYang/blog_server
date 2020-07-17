@@ -73,29 +73,12 @@ module.exports = {
         return await query(sql)
     },
 
-    // 根据文章id获取分类数据
-    getCategoryByArticleId: async article_id => {
+    // 批量删除文章和分类对应关系
+    delArticleCategory: async ids => {
         let sql = `
-            SELECT 
-            category_id
-            FROM article_category
-            WHERE article_id = ${article_id}
+            DELETE FROM article_category
+            WHERE category_id IN (${ids})
         `
-        return await query(sql)
-    },
-    // 根据文章id添加分类数据
-    addCategoryByArticleId: async (article_id, { categories }) => {
-        let sql = `
-            INSERT INTO
-            article_category(article_id, category_id)
-            VALUES
-        `
-        categories.forEach((category_id, index) => {
-            sql += `("${article_id}", "${category_id}")`
-            if (categories.length - 1 !== index) {
-                sql += `,`
-            }
-        })
         return await query(sql)
     }
 }

@@ -29,6 +29,7 @@ module.exports = {
 
     // 加上ip
     addLocalIP: (data, key, localIP) => {
+        if (!data[key]) return data
         let res = { ...data }
         res[key] = localIP + data[key]
         return res
@@ -36,6 +37,7 @@ module.exports = {
 
     // 删除ip
     delLocalIP: (data, key, localIP) => {
+        if (!data[key]) return data
         let res = { ...data }
         res[key] = data[key].replace(localIP, "")
         return res

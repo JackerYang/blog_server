@@ -46,23 +46,59 @@ module.exports = {
         let data = await query(sql)
         return data.insertId
     },
-    //
-    // // 修改一篇文章
-    // editArticle: async ({ id, title, remark }) => {
-    //     let sql = `
-    //         UPDATE article SET
-    //         title = "${title}", remark = "${remark}"
-    //         WHERE id = ${id}
-    //     `
-    //     return await query(sql)
-    // },
-    //
-    // // 批量删除文章
-    // delArticle: async ids => {
-    //     let sql = `
-    //         DELETE FROM article
-    //         WHERE id IN (${ids})
-    //     `
-    //     return await query(sql)
-    // }
+
+    // 修改一篇文章
+    editArticle: async ({ id, thumbnail, title, desc, content }) => {
+        let sql = `
+            UPDATE article SET
+            thumbnail = "${thumbnail}", title = "${title}", \`desc\` = "${desc}", content = "${content}"
+            WHERE id = ${id}
+        `
+        return await query(sql)
+    },
+
+    // 批量删除文章
+    delArticle: async ids => {
+        let sql = `
+            DELETE FROM article
+            WHERE id IN (${ids})
+        `
+        return await query(sql)
+    },
+
+    // 根据文章id批量删除文章和分类对应关系
+    delArticleCategory: async ids => {
+        let sql = `
+            DELETE FROM article_category
+            WHERE article_id IN (${ids})
+        `
+        return await query(sql)
+    },
+
+    // 根据文章id添加分类数据
+    addCategoryByArticleId: async (article_id, { categories }) => {
+        let sql = `
+            INSERT INTO
+            article_category(article_id, category_id)
+            VALUES
+        `
+        categories.forEach((category_id, index) => {
+            sql += `("${article_id}", "${category_id}")`
+            if (categories.length - 1 !== index) {
+                sql += `,`
+            }
+        })
+        return await query(sql)
+    },
+
+    // 根据文章id获取分类数据
+    getCategoryByArticleId: async article_id => {
+        let sql = `
+            SELECT 
+            category_id
+            FROM article_category
+            WHERE article_id = ${article_id}
+        `
+        return await query(sql)
+    }
 }
