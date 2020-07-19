@@ -17,11 +17,11 @@ module.exports = {
     },
 
     // 处理上传
-    uploadHandler: (file, dir) => {
+    uploadImgHandler: (file, dir) => {
         const reader = fs.createReadStream(file.path)
         const fileName = file.path.split("upload_")[1]
         const filePath = `/${dir}/${fileName}`
-        const _filePath = path.join(__dirname, `../public/${dir}`) + `/${fileName}`
+        const _filePath = path.join(__dirname, `../public/images/${dir}`) + `/${fileName}`
         const upStream = fs.createWriteStream(_filePath)
         reader.pipe(upStream)
         return { name: fileName, path: filePath }
@@ -30,16 +30,18 @@ module.exports = {
     // 加上ip
     addLocalIP: (data, key, localIP) => {
         if (!data[key]) return data
+        let _pre = localIP + "/images"
         let res = { ...data }
-        res[key] = localIP + data[key]
+        res[key] = _pre + data[key]
         return res
     },
 
     // 删除ip
     delLocalIP: (data, key, localIP) => {
         if (!data[key]) return data
+        let _pre = localIP + "/images"
         let res = { ...data }
-        res[key] = data[key].replace(localIP, "")
+        res[key] = data[key].replace(_pre, "")
         return res
     }
 }

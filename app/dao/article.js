@@ -29,7 +29,7 @@ module.exports = {
     getArticle: async id => {
         let sql = `
             SELECT
-            id, thumbnail, title, \`desc\`, content
+            id, banner_img, title, \`desc\`, content
             FROM article
             WHERE id = ${id}
         `
@@ -37,21 +37,21 @@ module.exports = {
     },
 
     // 添加一篇文章
-    addArticle: async ({ thumbnail, title, desc, content }) => {
+    addArticle: async ({ banner_img, title, desc, content }) => {
         let sql = `
             INSERT INTO
-            article(thumbnail, title, \`desc\`, content, user_id)
-            VALUES("${thumbnail}", "${title}", "${desc}", "${content}", 1)
+            article(banner_img, title, \`desc\`, content, user_id)
+            VALUES("${banner_img}", "${title}", "${desc}", "${content}", 1)
         `
         let data = await query(sql)
         return data.insertId
     },
 
     // 修改一篇文章
-    editArticle: async ({ id, thumbnail, title, desc, content }) => {
+    editArticle: async ({ id, banner_img, title, desc, content }) => {
         let sql = `
             UPDATE article SET
-            thumbnail = "${thumbnail}", title = "${title}", \`desc\` = "${desc}", content = "${content}"
+            banner_img = "${banner_img}", title = "${title}", \`desc\` = "${desc}", content = "${content}"
             WHERE id = ${id}
         `
         return await query(sql)

@@ -14,9 +14,23 @@ module.exports = {
         return record[0]
     },
 
-    addCategory: async model => await category.addCategory(model),
+    addCategory: async model => {
+        let data = await category.getCategoryByName(model.name)
+        if (data.length) {
+            return data
+        } else {
+            await category.addCategory(model)
+        }
+    },
 
-    editCategory: async model => await category.editCategory(model),
+    editCategory: async model => {
+        let data = await category.getCategoryByName(model.name)
+        if (data.length) {
+            return data
+        } else {
+            await category.editCategory(model)
+        }
+    },
 
     delCategory: async ids => {
         await category.delCategory(ids)

@@ -24,15 +24,23 @@ module.exports = {
     addCategory: async ctx => {
         let req = ctx.request.body
         if (paramsHasEmpty(ctx, req, ["name"])) return
-        await category.addCategory(req)
-        ctx.send(null)
+        let res = await category.addCategory(req)
+        if (res) {
+            ctx.err(400, "分类名称已存在")
+        } else {
+            ctx.send(null)
+        }
     },
 
     editCategory: async ctx => {
         let req = ctx.request.body
         if (paramsHasEmpty(ctx, req, ["id", "name"])) return
-        await category.editCategory(req)
-        ctx.send(null)
+        let res = await category.editCategory(req)
+        if (res) {
+            ctx.err(400, "分类名称已存在")
+        } else {
+            ctx.send(null)
+        }
     },
 
     delCategory: async ctx => {

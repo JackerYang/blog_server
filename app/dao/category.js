@@ -44,6 +44,16 @@ module.exports = {
         return await query(sql)
     },
 
+    // 根据分类名称查找
+    getCategoryByName: async name => {
+        let sql = `
+            SELECT
+            id
+            FROM category WHERE name = "${name}"
+        `
+        return await query(sql)
+    },
+
     // 添加一个分类
     addCategory: async ({ name, remark }) => {
         let sql = `

@@ -26,7 +26,7 @@ module.exports = {
     editArticle: async ctx => {
         let req = ctx.request.body
         if (paramsHasEmpty(ctx, req, ["id", "title", "desc", "content", "categories"])) return
-        await article.editArticle(req)
+        await article.editArticle(req, ctx.origin)
         ctx.send(null)
     },
 
