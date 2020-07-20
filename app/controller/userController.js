@@ -1,44 +1,39 @@
-const friend = require("../service/friend")
+const userService = require("../service/userService")
 const { paramsHasEmpty } = require("../../libs/utils")
 
 module.exports = {
-    getFriendList: async ctx => {
-        let res = await friend.getFriendList(ctx.origin)
-        ctx.send(res)
-    },
-
-    getFriendPage: async ctx => {
+    getUserPage: async ctx => {
         let req = ctx.request.query
         if (paramsHasEmpty(ctx, req, ["page", "pageSize"])) return
-        let res = await friend.getFriendPage(req, ctx.origin)
+        let res = await userService.getUserPage(req)
         ctx.send(res)
     },
 
-    getFriend: async ctx => {
+    getUser: async ctx => {
         let req = ctx.request.query
         if (paramsHasEmpty(ctx, req, ["id"])) return
-        let res = await friend.getFriend(req.id, ctx.origin)
+        let res = await userService.getUser(req.id)
         ctx.send(res)
     },
 
-    addFriend: async ctx => {
+    addUser: async ctx => {
         let req = ctx.request.body
         if (paramsHasEmpty(ctx, req, ["name", "introduction", "avatar", "url"])) return
-        await friend.addFriend(req, ctx.origin)
+        await userService.addUser(req)
         ctx.send(null)
     },
 
-    editFriend: async ctx => {
+    editUser: async ctx => {
         let req = ctx.request.body
         if (paramsHasEmpty(ctx, req, ["id", "name", "introduction", "avatar", "url"])) return
-        await friend.editFriend(req, ctx.origin)
+        await userService.editUser(req)
         ctx.send(null)
     },
 
-    delFriend: async ctx => {
+    delUser: async ctx => {
         let req = ctx.request.query
         if (paramsHasEmpty(ctx, req, ["ids"])) return
-        await friend.delFriend(req.ids.split(","))
+        await userService.delUser(req.ids.split(","))
         ctx.send(null)
     }
 }

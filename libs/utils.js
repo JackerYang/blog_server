@@ -1,5 +1,7 @@
 const fs = require("fs")
 const path = require("path")
+const md = require("md5")
+const { PWD_SALT } = require("../config")
 
 module.exports = {
     // 判断参数是否为空
@@ -27,21 +29,6 @@ module.exports = {
         return { name: fileName, path: filePath }
     },
 
-    // 加上ip
-    addLocalIP: (data, key, localIP) => {
-        if (!data[key]) return data
-        let _pre = localIP + "/images"
-        let res = { ...data }
-        res[key] = _pre + data[key]
-        return res
-    },
-
-    // 删除ip
-    delLocalIP: (data, key, localIP) => {
-        if (!data[key]) return data
-        let _pre = localIP + "/images"
-        let res = { ...data }
-        res[key] = data[key].replace(_pre, "")
-        return res
-    }
+    // md5加密
+    mdPwd: str => md(str + PWD_SALT)
 }

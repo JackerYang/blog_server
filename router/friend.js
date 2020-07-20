@@ -1,11 +1,11 @@
 const friendRouter = require("koa-router")()
-const friend = require("../app/controller/friend")
+const friendController = require("../app/controller/friendController")
 
-friendRouter.get("/list", friend.getFriendList)
-friendRouter.get("/page", friend.getFriendPage)
-friendRouter.get("/", friend.getFriend)
-friendRouter.post("/", friend.addFriend)
-friendRouter.put("/", friend.editFriend)
-friendRouter.delete("/", friend.delFriend)
+friendRouter.get("/list", friendController.getFriendList)
+friendRouter.get("/page", friendController.getFriendPage)
+friendRouter.get("/", friendController.getFriend)
+friendRouter.post("/", friendController.addFriend)
+friendRouter.put("/", friendController.editFriend)
+friendRouter.delete("/", friendController.delFriend)
 
 module.exports = friendRouter.routes()

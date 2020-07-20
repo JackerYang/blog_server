@@ -1,10 +1,10 @@
 const articleRouter = require("koa-router")()
-const article = require("../app/controller/article")
+const articleController = require("../app/controller/articleController")
 
-articleRouter.get("/page", article.getArticlePage)
-articleRouter.get("/", article.getArticle)
-articleRouter.post("/", article.addArticle)
-articleRouter.put("/", article.editArticle)
-articleRouter.delete("/", article.delArticle)
+articleRouter.get("/page", articleController.getArticlePage)
+articleRouter.get("/", articleController.getArticle)
+articleRouter.post("/", articleController.addArticle)
+articleRouter.put("/", articleController.editArticle)
+articleRouter.delete("/", articleController.delArticle)
 
 module.exports = articleRouter.routes()
