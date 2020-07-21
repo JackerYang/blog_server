@@ -3,6 +3,7 @@ const imagesRoutes = require("./images")
 const articleRoutes = require("./article")
 const categoryRoutes = require("./category")
 const friendRoutes = require("./friend")
+const userRoutes = require("./user")
 
 // 前缀
 router.prefix("/api")
@@ -14,6 +15,8 @@ router.use("/images", imagesRoutes)
 router.use("/article", articleRoutes)
 // 分类
 router.use("/category", categoryRoutes)
+// 用户
+router.use("/user", userRoutes)
 // 友邻
 router.use("/friend", friendRoutes)
 

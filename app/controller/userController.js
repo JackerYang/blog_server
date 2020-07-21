@@ -18,14 +18,14 @@ module.exports = {
 
     addUser: async ctx => {
         let req = ctx.request.body
-        if (paramsHasEmpty(ctx, req, ["name", "introduction", "avatar", "url"])) return
+        if (paramsHasEmpty(ctx, req, ["name", "password"])) return
         await userService.addUser(req)
         ctx.send(null)
     },
 
     editUser: async ctx => {
         let req = ctx.request.body
-        if (paramsHasEmpty(ctx, req, ["id", "name", "introduction", "avatar", "url"])) return
+        if (paramsHasEmpty(ctx, req, ["id", "name"])) return
         await userService.editUser(req)
         ctx.send(null)
     },

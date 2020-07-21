@@ -1,5 +1,5 @@
 module.exports = async (ctx, next) => {
-    let { body, method, url } = ctx.request
+    let { method, url } = ctx.request
     let reqUrl = url.split("?")[0].replace("/api", "")
     const pre = `${ctx.origin}/images`
 
@@ -24,11 +24,22 @@ module.exports = async (ctx, next) => {
             path: "/friend",
             method: "PUT",
             key: "avatar"
+        },
+        {
+            path: "/user",
+            method: "POST",
+            key: "avatar"
+        },
+        {
+            path: "/user",
+            method: "PUT",
+            key: "avatar"
         }
     ]
+    let reqBody = ctx.request.body
     let delPreItem = delPre.find(i => i.method === method && i.path === reqUrl)
     if (delPreItem) {
-        body[delPreItem.key] = body[delPreItem.key].replace(pre, "")
+        reqBody[delPreItem.key] = reqBody[delPreItem.key].replace(pre, "")
     }
 
     await next()
@@ -42,7 +53,7 @@ module.exports = async (ctx, next) => {
             key: "banner_img"
         },
         {
-            path: "/article/banner/upload",
+            path: "/images/article/banner/upload",
             method: "POST",
             model: "array",
             key: "url"
@@ -66,23 +77,48 @@ module.exports = async (ctx, next) => {
             key: "avatar"
         },
         {
-            path: "/friend/avatar/upload",
+            path: "/images/friend/avatar/upload",
+            method: "POST",
+            model: "array",
+            key: "url"
+        },
+        {
+            path: "/user/page",
+            method: "GET",
+            model: "object-array",
+            key: "avatar"
+        },
+        {
+            path: "/user",
+            method: "GET",
+            model: "object",
+            key: "avatar"
+        },
+        {
+            path: "/images/user/avatar/upload",
             method: "POST",
             model: "array",
             key: "url"
         }
     ]
     let addPreItem = addPre.find(i => i.method === method && i.path === reqUrl)
-    if (addPreItem) {
+    if (addPreItem && ctx?.body?.code === 200) {
+        let data = ctx.body.data
         if (addPreItem.model === "object") {
-            body[addPreItem.key] = pre + body[addPreItem.key]
+            if (data[addPreItem.key]) {
+                data[addPreItem.key] = pre + data[addPreItem.key]
+            }
         } else if (addPreItem.model === "array") {
-            body.forEach(item => {
-                item[addPreItem.key] = pre + item[addPreItem.key]
+            data.forEach(item => {
+                if (item[addPreItem.key]) {
+                    item[addPreItem.key] = pre + item[addPreItem.key]
+                }
             })
         } else if (addPreItem.model === "object-array") {
-            body.record.forEach(item => {
-                item[addPreItem.key] = pre + item[addPreItem.key]
+            data.record.forEach(item => {
+                if (item[addPreItem.key]) {
+                    item[addPreItem.key] = pre + item[addPreItem.key]
+                }
             })
         }
     }
