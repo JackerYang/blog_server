@@ -1,4 +1,5 @@
 const router = require("koa-router")()
+const sysRoutes = require("./sys")
 const imagesRoutes = require("./images")
 const articleRoutes = require("./article")
 const categoryRoutes = require("./category")
@@ -8,16 +9,23 @@ const userRoutes = require("./user")
 // 前缀
 router.prefix("/api")
 
+/**
+ * ========================== 后台接口开始 ==========================
+ */
+// 系统
+router.use("/sys", sysRoutes)
 // 图片
 router.use("/images", imagesRoutes)
-
 // 文章
 router.use("/article", articleRoutes)
 // 分类
 router.use("/category", categoryRoutes)
-// 用户
-router.use("/user", userRoutes)
 // 友邻
 router.use("/friend", friendRoutes)
+// 用户
+router.use("/user", userRoutes)
+/**
+ * ========================== 后台接口结束 ==========================
+ */
 
 module.exports = app => app.use(router.routes())

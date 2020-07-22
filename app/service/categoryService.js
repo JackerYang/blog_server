@@ -15,18 +15,18 @@ module.exports = {
     },
 
     addCategory: async model => {
-        let data = await categoryDao.getCategoryByName(model.name)
-        if (data.length) {
-            return data
+        let isNameExist = await this.nameHasExist(model.name)
+        if (isNameExist) {
+            return "nameHasExist"
         } else {
             await categoryDao.addCategory(model)
         }
     },
 
     editCategory: async model => {
-        let data = await categoryDao.getCategoryByName(model.name)
-        if (data.length) {
-            return data
+        let isNameExist = await this.nameHasExist(model.name)
+        if (isNameExist) {
+            return "nameHasExist"
         } else {
             await categoryDao.editCategory(model)
         }
@@ -35,5 +35,10 @@ module.exports = {
     delCategory: async ids => {
         await categoryDao.delCategory(ids)
         await categoryDao.delArticleCategory(ids)
+    },
+
+    nameHasExist: async name => {
+        let data = await categoryDao.getCategoryByName(name)
+        return data.length !== 0
     }
 }

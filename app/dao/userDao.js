@@ -44,16 +44,6 @@ module.exports = {
         return await query(sql)
     },
 
-    // 根据用户名和密码获取一个用户
-    getUserByNameAndPwd: async ({ name, password }) => {
-        let sql = `
-            SELECT
-            id, name, avatar
-            FROM user WHERE name = "${name}" AND password = "${password}"
-        `
-        return await query(sql)
-    },
-
     // 添加一个用户
     addUser: async ({ avatar, name, password }) => {
         let sql = `
@@ -69,16 +59,6 @@ module.exports = {
         let sql = `
             UPDATE user SET 
             avatar = "${avatar}", name = "${name}"
-            WHERE id = ${id}
-        `
-        return await query(sql)
-    },
-
-    // 修改密码
-    updateUserPassword: async ({ id, password }) => {
-        let sql = `
-            UPDATE user SET 
-            password = "${password}"
             WHERE id = ${id}
         `
         return await query(sql)

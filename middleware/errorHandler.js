@@ -3,6 +3,10 @@ module.exports = async (ctx, next) => {
         await next()
     } catch (err) {
         console.log(err)
-        ctx.err(400, "请求出错，请联系管理员！")
+        if (err?.message === "Authentication Error") {
+            ctx.err(401, "token 无效")
+        } else {
+            ctx.err(400, err)
+        }
     }
 }

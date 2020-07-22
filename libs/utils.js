@@ -1,7 +1,5 @@
 const fs = require("fs")
 const path = require("path")
-const md = require("md5")
-const { PWD_SALT } = require("../config")
 
 module.exports = {
     // 判断参数是否为空
@@ -27,8 +25,5 @@ module.exports = {
         const upStream = fs.createWriteStream(_filePath)
         reader.pipe(upStream)
         return { name: fileName, path: filePath }
-    },
-
-    // md5加密
-    mdPwd: str => md(str + PWD_SALT)
+    }
 }

@@ -25,7 +25,7 @@ module.exports = {
         let req = ctx.request.body
         if (paramsHasEmpty(ctx, req, ["name"])) return
         let res = await categoryService.addCategory(req)
-        if (res) {
+        if (res === "nameHasExist") {
             ctx.err(400, "分类名称已存在")
         } else {
             ctx.send(null)
@@ -36,7 +36,7 @@ module.exports = {
         let req = ctx.request.body
         if (paramsHasEmpty(ctx, req, ["id", "name"])) return
         let res = await categoryService.editCategory(req)
-        if (res) {
+        if (res === "nameHasExist") {
             ctx.err(400, "分类名称已存在")
         } else {
             ctx.send(null)

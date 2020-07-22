@@ -1,5 +1,5 @@
 const userDao = require("../dao/userDao")
-const { mdPwd } = require("../../libs/utils")
+const { mdPwd } = require("../../libs/md5")
 
 module.exports = {
     getUserPage: async params => {
@@ -17,11 +17,28 @@ module.exports = {
     },
 
     addUser: async model => {
-        model.password = mdPwd(model.password)
-        await userDao.addUser(model)
+        let res = await this.nameHasExist(model.name)
+        if (res) {
+            return "nameHasExist"
+        } else {
+            model.password = mdPwd(model.password)
+            await userDao.addUser(model)
+        }
     },
 
-    editUser: async model => await userDao.editUser(model),
+    editUser: async model => {
+        let res = await this.nameHasExist(model.name)
+        if (res) {
+            return "nameHasExist"
+        } else {
+            await userDao.editUser(model)
+        }
+    },
 
-    delUser: async ids => await userDao.delUser(ids)
+    delUser: async ids => await userDao.delUser(ids),
+
+    nameHasExist: async name => {
+        let data = await userDao.getUserByName(name)
+        return data.length !== 0
+    }
 }

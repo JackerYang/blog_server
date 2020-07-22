@@ -19,15 +19,23 @@ module.exports = {
     addUser: async ctx => {
         let req = ctx.request.body
         if (paramsHasEmpty(ctx, req, ["name", "password"])) return
-        await userService.addUser(req)
-        ctx.send(null)
+        let res = await userService.addUser(req)
+        if (res === "nameHasExist") {
+            ctx.err(400, "用户名已存在")
+        } else {
+            ctx.send(null)
+        }
     },
 
     editUser: async ctx => {
         let req = ctx.request.body
         if (paramsHasEmpty(ctx, req, ["id", "name"])) return
-        await userService.editUser(req)
-        ctx.send(null)
+        let res = await userService.editUser(req)
+        if (res === "nameHasExist") {
+            ctx.err(400, "用户名已存在")
+        } else {
+            ctx.send(null)
+        }
     },
 
     delUser: async ctx => {
