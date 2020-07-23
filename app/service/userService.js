@@ -1,6 +1,11 @@
 const userDao = require("../dao/userDao")
 const { mdPwd } = require("../../libs/md5")
 
+const nameHasExist = async (name, id) => {
+    let data = await userDao.getUserByName(name, id)
+    return data.length !== 0
+}
+
 module.exports = {
     getUserPage: async params => {
         let record = await userDao.getUserPage(params)
@@ -17,7 +22,7 @@ module.exports = {
     },
 
     addUser: async model => {
-        let res = await this.nameHasExist(model.name)
+        let res = await nameHasExist(model.name)
         if (res) {
             return "nameHasExist"
         } else {
@@ -27,7 +32,7 @@ module.exports = {
     },
 
     editUser: async model => {
-        let res = await this.nameHasExist(model.name)
+        let res = await nameHasExist(model.name, model.id)
         if (res) {
             return "nameHasExist"
         } else {
@@ -35,10 +40,5 @@ module.exports = {
         }
     },
 
-    delUser: async ids => await userDao.delUser(ids),
-
-    nameHasExist: async name => {
-        let data = await userDao.getUserByName(name)
-        return data.length !== 0
-    }
+    delUser: async ids => await userDao.delUser(ids)
 }

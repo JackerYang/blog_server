@@ -99,6 +99,12 @@ module.exports = async (ctx, next) => {
             method: "POST",
             model: "array",
             key: "url"
+        },
+        {
+            path: "/sys/user/info",
+            method: "GET",
+            model: "object",
+            key: "avatar"
         }
     ]
     let addPreItem = addPre.find(i => i.method === method && i.path === reqUrl)

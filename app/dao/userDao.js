@@ -35,12 +35,15 @@ module.exports = {
     },
 
     // 检查用户名是否已存在
-    getUserByName: async name => {
+    getUserByName: async (name, id) => {
         let sql = `
             SELECT
             id
             FROM user WHERE name = "${name}"
         `
+        if (id) {
+            sql += ` AND id <> ${id}`
+        }
         return await query(sql)
     },
 
@@ -69,6 +72,16 @@ module.exports = {
         let sql = `
             DELETE FROM user
             WHERE id IN (${ids})
+        `
+        return await query(sql)
+    },
+
+    // 根据用户名id查询密码
+    getUserPwdById: async id => {
+        let sql = `
+            SELECT 
+            password
+            FROM user WHERE id = ${id}
         `
         return await query(sql)
     }
