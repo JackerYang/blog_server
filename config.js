@@ -5,8 +5,9 @@ module.exports = {
     // 数据库
     DATABASE: {
         host: "localhost",
+        port: 3306,
         user: "root",
-        password: "123456",
+        password: "@Root_12138",
         database: "blog",
         timezone: "08:00"
     },
