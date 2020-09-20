@@ -7,7 +7,7 @@ module.exports = {
         host: "localhost",
         port: 3306,
         user: "root",
-        password: "@Root_12138",
+        password: "123456",
         database: "blog",
         timezone: "08:00"
     },

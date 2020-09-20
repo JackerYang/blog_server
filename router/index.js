@@ -1,5 +1,4 @@
 const router = require("koa-router")()
-const sysRoutes = require("./sys")
 const imagesRoutes = require("./images")
 const articleRoutes = require("./article")
 const categoryRoutes = require("./category")
@@ -12,8 +11,6 @@ router.prefix("/api")
 /**
  * ========================== 后台接口开始 ==========================
  */
-// 系统
-router.use("/sys", sysRoutes)
 // 图片
 router.use("/images", imagesRoutes)
 // 文章

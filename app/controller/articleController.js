@@ -19,7 +19,7 @@ module.exports = {
     addArticle: async ctx => {
         let req = ctx.request.body
         if (paramsHasEmpty(ctx, req, ["title", "desc", "content", "categories"])) return
-        await articleService.addArticle(req)
+        await articleService.addArticle(req, ctx.state.user)
         ctx.send(null)
     },
 

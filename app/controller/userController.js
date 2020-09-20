@@ -43,5 +43,32 @@ module.exports = {
         if (paramsHasEmpty(ctx, req, ["ids"])) return
         await userService.delUser(req.ids.split(","))
         ctx.send(null)
+    },
+
+    login: async ctx => {
+        let req = ctx.request.body
+        if (paramsHasEmpty(ctx, req, ["name", "password"])) return
+        let token = await userService.login(req)
+        if (token) {
+            ctx.send({ token })
+        } else {
+            ctx.err(400, "用户名或密码不正确")
+        }
+    },
+
+    updateUserPwd: async ctx => {
+        let req = ctx.request.body
+        if (paramsHasEmpty(ctx, req, ["oldPassword", "newPassword"])) return
+        let res = await userService.updateUserPwd(req, ctx.state.user)
+        if (res === "oldPassword error") {
+            ctx.err(400, "旧密码错误")
+        } else {
+            ctx.send(null)
+        }
+    },
+
+    getUserInfo: async ctx => {
+        let res = await userService.getUserInfo(ctx.state.user)
+        ctx.send(res)
     }
 }

@@ -37,11 +37,11 @@ module.exports = {
     },
 
     // 添加一篇文章
-    addArticle: async ({ banner_img, title, desc, content }) => {
+    addArticle: async ({ banner_img, title, desc, content }, user_id) => {
         let sql = `
             INSERT INTO
             article(banner_img, title, \`desc\`, content, user_id)
-            VALUES("${banner_img}", "${title}", "${desc}", "${content}", 1)
+            VALUES("${banner_img}", "${title}", "${desc}", "${content}", ${user_id})
         `
         let data = await query(sql)
         return data.insertId

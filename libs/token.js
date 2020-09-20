@@ -8,10 +8,5 @@ module.exports = {
             expiresIn: "4h",
             ...option
         })
-    },
-
-    // 解析 token
-    parseToken: token => {
-        return jwt.verify(token.split(" ")[1], TOKEN_SALT)
     }
 }

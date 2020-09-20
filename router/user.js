@@ -6,5 +6,8 @@ userRouter.get("/", userController.getUser)
 userRouter.post("/", userController.addUser)
 userRouter.put("/", userController.editUser)
 userRouter.delete("/", userController.delUser)
+userRouter.post("/login", userController.login)
+userRouter.put("/update/password", userController.updateUserPwd)
+userRouter.get("/info", userController.getUserInfo)
 
 module.exports = userRouter.routes()

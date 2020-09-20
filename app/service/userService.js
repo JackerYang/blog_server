@@ -1,5 +1,6 @@
 const userDao = require("../dao/userDao")
 const { mdPwd } = require("../../libs/md5")
+const { generateToken } = require("../../libs/token")
 
 const nameHasExist = async (name, id) => {
     let data = await userDao.getUserByName(name, id)
@@ -40,5 +41,34 @@ module.exports = {
         }
     },
 
-    delUser: async ids => await userDao.delUser(ids)
+    delUser: async ids => await userDao.delUser(ids),
+
+    login: async model => {
+        model.password = mdPwd(model.password)
+        let res = await userDao.login(model)
+        let user = res[0]
+        if (user) {
+            let payload = {
+                id: user.id,
+                name: user.name
+            }
+            return generateToken(payload)
+        } else {
+            return null
+        }
+    },
+
+    updateUserPwd: async (model, user) => {
+        let [dbUser] = await userDao.getUserPwdById(user.id)
+        if (dbUser.password === mdPwd(model.oldPassword)) {
+            await userDao.updateUserPwd({ id: user.id, password: mdPwd(model.newPassword) })
+        } else {
+            return "oldPassword error"
+        }
+    },
+
+    getUserInfo: async user => {
+        let [dbUser] = await userDao.getUser(user.id)
+        return dbUser
+    }
 }

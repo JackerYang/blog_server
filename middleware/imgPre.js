@@ -101,7 +101,7 @@ module.exports = async (ctx, next) => {
             key: "url"
         },
         {
-            path: "/sys/user/info",
+            path: "/user/info",
             method: "GET",
             model: "object",
             key: "avatar"

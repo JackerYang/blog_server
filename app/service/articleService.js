@@ -13,8 +13,8 @@ module.exports = {
         return { ...record[0], categories: categories.map(c => c.category_id) }
     },
 
-    addArticle: async model => {
-        let article_id = await articleDao.addArticle(model)
+    addArticle: async (model, user) => {
+        let article_id = await articleDao.addArticle(model, user.id)
         await articleDao.addCategoryByArticleId(article_id, model)
     },
 
