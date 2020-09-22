@@ -23,7 +23,7 @@ module.exports = {
     getMessage: async id => {
         let sql = `
             SELECT
-            m.id, m.user_id, m.content, m.update_time, m.create_time, u.name
+            m.id, m.content, m.update_time, m.create_time, u.name
             FROM message m WHERE id = ${id}
             JOIN user u ON m.user_id = u.id
         `

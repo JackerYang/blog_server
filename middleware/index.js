@@ -1,5 +1,5 @@
 const errorHandler = require("./errorHandler")
-const logger = require("./logger")
+const { accessLogger } = require("./logger")
 const cors = require("./cors")
 const sendHandle = require("./sendHandler")
 const koaBody = require("./koaBody")
@@ -9,7 +9,7 @@ const koaJwt = require("./koaJwt")
 
 module.exports = app => {
     app.use(errorHandler)
-    app.use(logger)
+    app.use(accessLogger)
     app.use(cors)
     app.use(sendHandle)
     app.use(koaBody)

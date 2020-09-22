@@ -1,5 +1,4 @@
 /node_modules/
 /.idea/
-/public/images/article/banner/
-/public/images/friend/avatar/
-/public/images/user/avatar/
+/public/images/
+/logs/

@@ -41,7 +41,9 @@ module.exports = {
         }
     },
 
-    delUser: async ids => await userDao.delUser(ids),
+    delUser: async ids => {
+        await userDao.delUser(ids)
+    },
 
     login: async model => {
         model.password = mdPwd(model.password)
