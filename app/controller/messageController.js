@@ -16,20 +16,6 @@ module.exports = {
         ctx.send(res)
     },
 
-    addMessage: async ctx => {
-        let req = ctx.request.body
-        if (paramsHasEmpty(ctx, req, ["user_id", "content"])) return
-        await messageService.addMessage(req)
-        ctx.send(null)
-    },
-
-    editMessage: async ctx => {
-        let req = ctx.request.body
-        if (paramsHasEmpty(ctx, req, ["id", "content"])) return
-        await messageService.editMessage(req)
-        ctx.send(null)
-    },
-
     delMessage: async ctx => {
         let req = ctx.request.query
         if (paramsHasEmpty(ctx, req, ["ids"])) return
