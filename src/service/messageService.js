@@ -15,15 +15,6 @@ module.exports = {
         return record[0]
     },
 
-    addMessage: async model => {
-        await messageDao.addMessage(model)
-
-    },
-
-    editMessage: async model => {
-        await messageDao.editMessage(model)
-    },
-
     delMessage: async ids => {
         await messageDao.delMessage(ids)
     }

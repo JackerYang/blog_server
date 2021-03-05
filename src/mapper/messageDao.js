@@ -11,7 +11,7 @@ module.exports = {
     getMessagePage: async ({ page, pageSize }) => {
         let sql = `
             SELECT
-            m.id, m.user_id, m.content, m.update_time, m.create_time, u.name
+            m.id, m.user_id, m.content, m.like_count, m.reply_count, m.update_time, m.create_time, u.name
             FROM message m
             JOIN user u ON m.user_id = u.id
         `
@@ -23,29 +23,9 @@ module.exports = {
     getMessage: async id => {
         let sql = `
             SELECT
-            m.id, m.content, m.update_time, m.create_time, u.name
+            m.id, m.content, m.like_count, m.reply_count, m.update_time, m.create_time, u.name
             FROM message m WHERE id = ${id}
             JOIN user u ON m.user_id = u.id
-        `
-        return await query(sql)
-    },
-
-    // 添加一条留言
-    addMessage: async ({ user_id, content }) => {
-        let sql = `
-            INSERT INTO
-            message(user_id, content)
-            VALUES("${user_id}", "${content}")
-        `
-        return await query(sql)
-    },
-
-    // 修改一条留言
-    editMessage: async ({ id, content }) => {
-        let sql = `
-            UPDATE message SET
-            content = "${content}"
-            WHERE id = ${id}
         `
         return await query(sql)
     },
